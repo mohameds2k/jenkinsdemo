@@ -4,22 +4,8 @@ pipeline {
     stages {
         stage('Verify') {
             steps {
+                // This command lists the files to verify they were checked out correctly
                 bat 'dir'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                bat 'docker build -t dewixaltius/jenkins-demo .'
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                    bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
-                    bat 'docker push dewixaltius/jenkins-demo'
-                }
             }
         }
     }
